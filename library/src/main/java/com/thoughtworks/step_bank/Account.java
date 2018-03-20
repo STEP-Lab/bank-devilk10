@@ -5,8 +5,11 @@ public class Account {
     private int balance;
 
 
-    public Account(String accountNumber, int balance) {
+    public Account(String accountNumber, int balance) throws MinimumBalanceException {
         this.accountNumber=accountNumber;
+        if (balance<100){
+            throw new MinimumBalanceException();
+        }
         this.balance=balance;
     }
 
