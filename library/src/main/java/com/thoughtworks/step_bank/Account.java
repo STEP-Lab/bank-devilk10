@@ -20,4 +20,9 @@ public class Account {
     public int getBalance() {
         return balance;
     }
+
+    public int credit(int amount) {
+        balance+=amount;
+        return balance;
+    }
 }

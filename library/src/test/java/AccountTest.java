@@ -29,4 +29,9 @@ public class AccountTest {
     public void checkMinimumBalance() throws MinimumBalanceException {
         new Account("101",10);
     }
+
+    @Test
+    public void checkCredit() {
+        assertThat(account.credit(1000),is(2000));
+    }
 }
