@@ -25,4 +25,9 @@ public class Account {
         balance+=amount;
         return balance;
     }
+
+    public int debit(int amount) {
+        balance-=amount;
+        return balance;
+    }
 }
