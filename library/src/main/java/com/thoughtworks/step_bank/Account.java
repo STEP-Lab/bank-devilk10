@@ -5,12 +5,19 @@ public class Account {
     private int balance;
 
 
-    public Account(String accountNumber, int balance) throws MinimumBalanceException {
-        this.accountNumber=accountNumber;
+    public Account(String accountNumber, int balance) throws MinimumBalanceException, InvalidAccountNumberException {
+        if (incorrectAccountNumberPattern(accountNumber)) {
+            throw new InvalidAccountNumberException();
+        }
         if (balance<100){
             throw new MinimumBalanceException();
         }
+        this.accountNumber=accountNumber;
         this.balance=balance;
+    }
+
+    private boolean incorrectAccountNumberPattern(String accountNumber) {
+        return !accountNumber.matches("^\\d{4}-\\d{4}$");
     }
 
     public String getAccountNumber() {
