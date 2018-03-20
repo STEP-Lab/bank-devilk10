@@ -1,0 +1,4 @@
+rootProject.name = 'step_bank'
+include 'application'
+include 'library'
+
