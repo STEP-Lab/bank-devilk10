@@ -74,4 +74,10 @@ public class AccountTest {
     public void getAccountHolderName() {
         assertThat(account.getAccountHolder(),is("ketan"));
     }
+
+    @Test
+    public void checkSummary() {
+        String summary=account.getSummary();
+        assertThat(summary,is("Account{accountNumber='1111-1111', accountHolder='ketan', balance=1000.0}"));
+    }
 }

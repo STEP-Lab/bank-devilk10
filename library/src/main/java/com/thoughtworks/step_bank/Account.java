@@ -6,7 +6,6 @@ public class Account {
     private final String accountHolder;
     private double balance;
 
-
     public Account(String accountHolder, String accountNumber, double balance) throws InvalidAccountNumberException, LowAmountException {
         if (incorrectAccountNumberPattern(accountNumber)) {
             throw new InvalidAccountNumberException();
@@ -57,5 +56,13 @@ public class Account {
 
     public String getAccountHolder() {
         return accountHolder;
+    }
+
+    public String getSummary() {
+        return "Account{" +
+                "accountNumber='" + accountNumber + '\'' +
+                ", accountHolder='" + accountHolder + '\'' +
+                ", balance=" + balance +
+                '}';
     }
 }
