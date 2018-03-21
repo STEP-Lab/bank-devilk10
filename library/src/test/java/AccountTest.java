@@ -14,7 +14,7 @@ public class AccountTest {
 
     @Before
     public void setUp() throws LowAmountException, InvalidAccountNumberException {
-        account = new Account("1111-1111",1000.0);
+        account = new Account("ketan","1111-1111",1000.0);
     }
 
     @Test
@@ -29,7 +29,7 @@ public class AccountTest {
 
     @Test (expected = LowAmountException.class)
     public void checkMinimumBalance() throws LowAmountException,InvalidAccountNumberException {
-        new Account("1011-2222",10);
+        new Account("ketan","1011-2222",10);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class AccountTest {
 
     @Test (expected = InvalidAccountNumberException.class)
     public void accountNumberValidation() throws InvalidAccountNumberException, LowAmountException {
-        new Account("1111",1000);
+        new Account("ketan","1111",1000);
     }
 
     @Test
@@ -68,5 +68,10 @@ public class AccountTest {
     @Test (expected = LowAmountException.class)
     public void checkLowAmountException() throws LowAmountException {
         account.credit(-4);
+    }
+
+    @Test
+    public void getAccountHolderName() {
+        assertThat(account.getAccountHolder(),is("ketan"));
     }
 }
