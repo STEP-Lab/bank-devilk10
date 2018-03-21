@@ -1,8 +1,6 @@
 import com.thoughtworks.step_bank.Account;
 import com.thoughtworks.step_bank.InvalidAccountNumberException;
 import com.thoughtworks.step_bank.LowAmountException;
-import com.thoughtworks.step_bank.MinimumBalanceException;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import static org.hamcrest.core.Is.is;
@@ -15,7 +13,7 @@ public class AccountTest {
     private Account account;
 
     @Before
-    public void setUp() throws MinimumBalanceException, InvalidAccountNumberException {
+    public void setUp() throws LowAmountException, InvalidAccountNumberException {
         account = new Account("1111-1111",1000.0);
     }
 
@@ -29,8 +27,8 @@ public class AccountTest {
         assertThat(account.getAccountNumber(),is("1111-1111"));
     }
 
-    @Test (expected = MinimumBalanceException.class)
-    public void checkMinimumBalance() throws MinimumBalanceException,InvalidAccountNumberException {
+    @Test (expected = LowAmountException.class)
+    public void checkMinimumBalance() throws LowAmountException,InvalidAccountNumberException {
         new Account("1011-2222",10);
     }
 
@@ -40,26 +38,31 @@ public class AccountTest {
     }
 
     @Test
-    public void checkDebit() throws MinimumBalanceException, LowAmountException {
+    public void checkDebit() throws LowAmountException, LowAmountException {
         account.credit(1000);
         assertThat(account.getBalance(),is(2000.0));
         assertThat(account.debit(1000),is(1000.0));
     }
 
-    @Test (expected = MinimumBalanceException.class)
-    public void debitValidation() throws MinimumBalanceException{
+    @Test (expected = LowAmountException.class)
+    public void debitValidation() throws LowAmountException{
         account.debit(950);
         assertThat(account.getBalance(),is(1000.0));
     }
 
     @Test (expected = InvalidAccountNumberException.class)
-    public void accountNumberValidation() throws InvalidAccountNumberException, MinimumBalanceException {
+    public void accountNumberValidation() throws InvalidAccountNumberException, LowAmountException {
         new Account("1111",1000);
     }
 
     @Test
     public void checkCanCredit() {
         assertTrue(account.canCredit(100));
+    }
+
+    @Test
+    public void checkCanDebit() {
+        assertTrue(account.canDebit(10));
     }
 
     @Test (expected = LowAmountException.class)

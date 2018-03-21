@@ -5,12 +5,12 @@ public class Account {
     private double balance;
 
 
-    public Account(String accountNumber, double balance) throws MinimumBalanceException, InvalidAccountNumberException {
+    public Account(String accountNumber, double balance) throws InvalidAccountNumberException, LowAmountException {
         if (incorrectAccountNumberPattern(accountNumber)) {
             throw new InvalidAccountNumberException();
         }
         if (balance<100){
-            throw new MinimumBalanceException();
+            throw new LowAmountException("Insufficient account balance to create account");
         }
         this.accountNumber=accountNumber;
         this.balance=balance;
@@ -30,7 +30,7 @@ public class Account {
 
     public double credit(int amount) throws LowAmountException{
         if(!canCredit(amount)){
-            throw new LowAmountException();
+            throw new LowAmountException("Invalid credit request");
         }
         balance+=amount;
         return balance;
@@ -40,15 +40,15 @@ public class Account {
         return amount>0;
     }
 
-    public double debit(int amount) throws MinimumBalanceException {
+    public double debit(int amount) throws LowAmountException {
         if (!canDebit(amount)) {
-            throw new MinimumBalanceException();
+            throw new LowAmountException("Can't process your debit request due to low balance");
         }
         balance-=amount;
         return balance;
     }
 
-    private boolean canDebit(int amount) {
+    public boolean canDebit(int amount) {
         return balance-amount>100;
     }
 }
