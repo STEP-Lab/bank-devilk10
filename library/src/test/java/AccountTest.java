@@ -1,10 +1,13 @@
 import com.thoughtworks.step_bank.Account;
 import com.thoughtworks.step_bank.InvalidAccountNumberException;
+import com.thoughtworks.step_bank.LowAmountException;
 import com.thoughtworks.step_bank.MinimumBalanceException;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 
 public class AccountTest {
@@ -32,12 +35,12 @@ public class AccountTest {
     }
 
     @Test
-    public void checkCredit() {
+    public void checkCredit() throws LowAmountException {
         assertThat(account.credit(1000),is(2000.0));
     }
 
     @Test
-    public void checkDebit() throws MinimumBalanceException {
+    public void checkDebit() throws MinimumBalanceException, LowAmountException {
         account.credit(1000);
         assertThat(account.getBalance(),is(2000.0));
         assertThat(account.debit(1000),is(1000.0));
@@ -52,5 +55,15 @@ public class AccountTest {
     @Test (expected = InvalidAccountNumberException.class)
     public void accountNumberValidation() throws InvalidAccountNumberException, MinimumBalanceException {
         new Account("1111",1000);
+    }
+
+    @Test
+    public void checkCanCredit() {
+        assertTrue(account.canCredit(100));
+    }
+
+    @Test (expected = LowAmountException.class)
+    public void checkLowAmountException() throws LowAmountException {
+        account.credit(-4);
     }
 }

@@ -28,16 +28,27 @@ public class Account {
         return balance;
     }
 
-    public double credit(int amount) {
+    public double credit(int amount) throws LowAmountException{
+        if(!canCredit(amount)){
+            throw new LowAmountException();
+        }
         balance+=amount;
         return balance;
     }
 
-    public double debit(int amount) throws MinimumBalanceException{
-        if (balance-amount<100){
+    public boolean canCredit(int amount) {
+        return amount>0;
+    }
+
+    public double debit(int amount) throws MinimumBalanceException {
+        if (!canDebit(amount)) {
             throw new MinimumBalanceException();
         }
         balance-=amount;
         return balance;
+    }
+
+    private boolean canDebit(int amount) {
+        return balance-amount>100;
     }
 }
