@@ -20,7 +20,7 @@ public class Account {
     return balance;
   }
 
-  public String getAccountNumber() {
+  private String getAccountNumber() {
     return accountNumber.number;
   }
 
