@@ -8,12 +8,16 @@ public class Account {
   private double balance;
 
   Account(String accountHolder, String accountNumber, double balance) throws InvalidAccountNumberException, LowAmountException {
+    this.accountHolder=accountHolder;
+    this.accountNumber=new AccountNumber(accountNumber);
+    this.balance=validateBalance(balance);
+  }
+
+  private double validateBalance(double balance) throws LowAmountException {
     if (balance < minimumBalance) {
       throw new LowAmountException("Insufficient account balance to create account");
     }
-    this.accountHolder=accountHolder;
-    this.accountNumber=new AccountNumber(accountNumber);
-    this.balance=balance;
+    return balance;
   }
 
   public String getAccountNumber() {
