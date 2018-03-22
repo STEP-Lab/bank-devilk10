@@ -4,13 +4,14 @@ package com.thoughtworks.step_bank;
 public class Account {
     private final String accountNumber;
     private final String accountHolder;
+    private final double minimumBalance = 100;
     private double balance;
 
     public Account(String accountHolder, String accountNumber, double balance) throws InvalidAccountNumberException, LowAmountException {
         if (incorrectAccountNumberPattern(accountNumber)) {
             throw new InvalidAccountNumberException();
         }
-        if (balance<100){
+        if (balance<minimumBalance){
             throw new LowAmountException("Insufficient account balance to create account");
         }
         this.accountHolder=accountHolder;
@@ -51,7 +52,7 @@ public class Account {
     }
 
     public boolean canDebit(int amount) {
-        return balance-amount>100;
+        return balance-amount>minimumBalance;
     }
 
     public String getAccountHolder() {
