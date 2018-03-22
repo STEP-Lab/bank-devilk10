@@ -22,11 +22,6 @@ public class AccountTest {
     assertThat(account.getBalance(), is(1000.0));
   }
 
-  @Test
-  public void checkAccountNumber() {
-    assertThat(account.getAccountNumber(), is("1111-1111"));
-  }
-
   @Test(expected = LowAmountException.class)
   public void checkMinimumBalance() throws LowAmountException, InvalidAccountNumberException {
     new Account("ketan", "1011-2222", 10);
@@ -76,8 +71,8 @@ public class AccountTest {
   }
 
   @Test
-  public void checkGetSummary() {
-    String summary = account.getSummary();
-    assertThat(summary, is("Account{accountNumber='1111-1111', accountHolder='ketan', balance=1000.0}"));
+  public void checkSummary() {
+    String summary=account.getSummary();
+    assertThat(summary,is("Account{accountNumber='1111-1111', accountHolder='ketan', balance=1000.0}"));
   }
 }
