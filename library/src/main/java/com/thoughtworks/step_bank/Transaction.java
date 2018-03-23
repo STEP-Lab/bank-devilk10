@@ -29,6 +29,6 @@ public abstract class Transaction {
 
   @Override
   public int hashCode() {
-    return Objects.hash(amount, date, to);
+    return Objects.hash(amount, to);
   }
 }

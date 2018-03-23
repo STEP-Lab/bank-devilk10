@@ -3,7 +3,10 @@ package com.thoughtworks.step_bank;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Date;
+
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -74,5 +77,17 @@ public class AccountTest {
   public void checkSummary() {
     String summary=account.getSummary();
     assertThat(summary,is("Account{accountNumber='1111-1111', accountHolder='ketan', balance=1000.0}"));
+  }
+
+  @Test
+  public void checkDebitTransaction() throws LowAmountException {
+    account.debit(10);
+    assertThat(account.getAllTransactions(),hasItem(new DebitTransaction(new Date(),"ketan",10)));
+  }
+
+  @Test
+  public void checkCreditTransaction() throws LowAmountException {
+    account.credit(1000);
+    assertThat(account.getAllTransactions(),hasItem(new CreditTransaction("ketan",1000)));
   }
 }
