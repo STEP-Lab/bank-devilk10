@@ -3,6 +3,9 @@ package com.thoughtworks.step_bank;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
@@ -73,5 +76,25 @@ public class TransactionsTest {
     transaction.credit("ketan",1000);
     ArrayList<Transaction> trans = transaction.getCreditTransactions();
     assertThat(trans,hasItem(new CreditTransaction("ketan",1000)));
+  }
+
+  @Test
+  public void shouldAddTransactionsToFile() throws FileNotFoundException, UnsupportedEncodingException {
+    ArrayList<String> result=new ArrayList<>();
+    transaction.credit("ketan",1000);
+    transaction.debit("ketan",1000);
+    PrintWriter pr = new PrintWriter("transactions.txt","UTF-8"){
+      @Override
+      public void println(String x) {
+        result.add(x);
+        System.out.println(x);
+      }
+    };
+    transaction.print(pr);
+    pr.write(result.toString());
+    pr.flush();
+    pr.close();
+    Transaction cr = new CreditTransaction("ketan",1000);
+    assertThat(result,hasItem(cr.toString()));
   }
 }
