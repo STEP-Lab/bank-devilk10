@@ -46,6 +46,14 @@ public class TransactionsTest {
   }
 
   @Test
+  public void filterDebitTransactionByAmount() {
+    transaction.debit("Pallabi", 1200);
+    transaction.debit("Pallabi", 900);
+    ArrayList<Transaction> trans = transaction.filterDebitByAmountGreaterThan(1100);
+    assertThat(trans,hasItem(new DebitTransaction("Pallabi",1200)));
+  }
+
+  @Test
   public void shouldReturnAllDebitTransactions() {
     transaction.debit("Pallabi", 900);
     ArrayList<Transaction> trans = transaction.getDebitTransactions();
