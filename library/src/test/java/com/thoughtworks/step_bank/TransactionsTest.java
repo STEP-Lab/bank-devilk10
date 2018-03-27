@@ -44,4 +44,18 @@ public class TransactionsTest {
     ArrayList<Transaction> trans = transaction.filterByAmountGreaterThan(1100);
     assertThat(trans,hasItem(new CreditTransaction("Pallabi",1200)));
   }
+
+  @Test
+  public void shouldReturnAllDebitTransactions() {
+    transaction.debit("Pallabi", 900);
+    ArrayList<Transaction> trans = transaction.getDebitTransactions();
+    assertThat(trans,hasItem(new DebitTransaction("Pallabi",900)));
+  }
+
+  @Test
+  public void shouldGetAllCreditTransactions() {
+    transaction.credit("ketan",1000);
+    ArrayList<Transaction> trans = transaction.getCreditTransactions();
+    assertThat(trans,hasItem(new CreditTransaction("ketan",1000)));
+  }
 }

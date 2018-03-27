@@ -25,5 +25,25 @@ public class Transactions {
       }
     }
     return filteredTransactions.allTransaction;
+  }
+
+  public ArrayList<Transaction> getDebitTransactions() {
+    Transactions filteredTransactions = new Transactions();
+    for (Transaction transaction:allTransaction){
+      if (transaction instanceof DebitTransaction) {
+        filteredTransactions.allTransaction.add(transaction);
+      }
     }
+    return filteredTransactions.allTransaction;
+  }
+
+  public ArrayList<Transaction> getCreditTransactions() {
+    Transactions filteredTransactions = new Transactions();
+    for (Transaction transaction:allTransaction){
+      if (transaction instanceof CreditTransaction) {
+        filteredTransactions.allTransaction.add(transaction);
+      }
+    }
+    return filteredTransactions.allTransaction;
+  }
 }
