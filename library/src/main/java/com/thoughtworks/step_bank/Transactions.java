@@ -16,4 +16,14 @@ public class Transactions {
   public void credit(String to, double amount) {
     this.allTransaction.add(new CreditTransaction(to,amount));
   }
+
+  public ArrayList<Transaction> filterByAmountGreaterThan(int amount) {
+    Transactions filteredTransactions = new Transactions();
+    for (Transaction transaction:allTransaction){
+      if (transaction.getAmount()>=amount){
+        filteredTransactions.allTransaction.add(transaction);
+      }
+    }
+    return filteredTransactions.allTransaction;
+    }
 }
