@@ -18,6 +18,10 @@ public abstract class Transaction {
     return date;
   }
 
+  public String getTo() {
+    return to;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

@@ -82,8 +82,8 @@ public class TransactionsTest {
   public void shouldAddTransactionsToFile() throws FileNotFoundException, UnsupportedEncodingException {
     ArrayList<String> result=new ArrayList<>();
     transaction.credit("ketan",1000);
-    transaction.debit("ketan",1000);
-    PrintWriter pr = new PrintWriter("transactions.txt","UTF-8"){
+    transaction.debit("pallabi",1200);
+    PrintWriter pr = new PrintWriter("transactions.csv","UTF-8"){
       @Override
       public void println(String x) {
         result.add(x);
@@ -91,10 +91,9 @@ public class TransactionsTest {
       }
     };
     transaction.print(pr);
-    pr.write(result.toString());
-    pr.flush();
     pr.close();
-    Transaction cr = new CreditTransaction("ketan",1000);
-    assertThat(result,hasItem(cr.toString()));
+    Transaction credit = new CreditTransaction("ketan",1000);
+    String creditString=transaction.csvParser(credit);
+    assertThat(result,hasItem(creditString));
   }
 }
