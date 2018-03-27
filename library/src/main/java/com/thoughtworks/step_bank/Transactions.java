@@ -56,4 +56,14 @@ public class Transactions {
     }
     return filteredTransactions.allTransaction;
   }
+
+  public ArrayList<Transaction> filterDebitByAmountLessThan(int amount) {
+    Transactions filteredTransactions = new Transactions();
+    for (Transaction transaction:getDebitTransactions()){
+      if (transaction.getAmount()<=amount){
+        filteredTransactions.allTransaction.add(transaction);
+      }
+    }
+    return filteredTransactions.allTransaction;
+  }
 }
