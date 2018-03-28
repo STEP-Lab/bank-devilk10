@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.io.*;
 import java.util.ArrayList;
 
+import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.junit.Assert.assertThat;
 
@@ -94,5 +95,13 @@ public class TransactionsTest {
     Transaction credit = new CreditTransaction("ketan",1000);
     String creditString=transaction.toCSV(credit);
     assertThat(result,hasItem(creditString));
+  }
+
+  @Test
+  public void checkTypeOfTransactionInCSV() {
+    Transaction credit = new CreditTransaction("ketan",1000);
+    Transaction creditTrans = new CreditTransaction("ketan",1000);
+    String toString = creditTrans.getDate()+",1000.0,ketan,credit\n";
+    assertThat(transaction.toCSV(credit),is(toString));
   }
 }

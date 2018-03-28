@@ -72,7 +72,7 @@ public class Transactions {
   }
 
   public void print(FileWriter writer) throws IOException {
-    writer.write("date,amount,source\n");
+    writer.write("Date,Amount,Source,Type\n");
     for (Transaction transaction: allTransaction) {
       writer.write(toCSV(transaction));
     }
@@ -82,6 +82,10 @@ public class Transactions {
     Date date = transaction.getDate();
     Double amount = transaction.getAmount();
     String source = transaction.getSource();
-    return date+","+amount+","+source+"\n";
+    String type;
+    if (transaction instanceof CreditTransaction){
+      type="credit";
+    } else type="debit";
+    return date+","+amount+","+source+","+type+"\n";
   }
 }
