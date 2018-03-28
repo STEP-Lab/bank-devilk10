@@ -3,9 +3,7 @@ package com.thoughtworks.step_bank;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.ArrayList;
 
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
@@ -79,21 +77,22 @@ public class TransactionsTest {
   }
 
   @Test
-  public void shouldAddTransactionsToFile() throws FileNotFoundException, UnsupportedEncodingException {
+  public void shouldAddTransactionsToFile() throws IOException {
     ArrayList<String> result=new ArrayList<>();
     transaction.credit("ketan",1000);
     transaction.debit("pallabi",1200);
-    PrintWriter pr = new PrintWriter("transactions.csv","UTF-8"){
+    File file = new File("transactions.csv");
+    FileWriter wr = new FileWriter(file){
       @Override
-      public void println(String x) {
-        result.add(x);
-        System.out.println(x);
+      public void write(String str) throws IOException {
+        result.add(str);
+        System.out.println(str);
       }
     };
-    transaction.print(pr);
-    pr.close();
+    transaction.print(wr);
+    wr.close();
     Transaction credit = new CreditTransaction("ketan",1000);
-    String creditString=transaction.csvParser(credit);
+    String creditString=transaction.toCSV(credit);
     assertThat(result,hasItem(creditString));
   }
 }

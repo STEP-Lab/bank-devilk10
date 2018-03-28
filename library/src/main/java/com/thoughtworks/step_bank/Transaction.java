@@ -18,7 +18,7 @@ public abstract class Transaction {
     return date;
   }
 
-  public String getTo() {
+  public String getSource() {
     return to;
   }
 

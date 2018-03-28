@@ -1,5 +1,7 @@
 package com.thoughtworks.step_bank;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -69,23 +71,17 @@ public class Transactions {
     return filteredTransactions.allTransaction;
   }
 
-  public void print(PrintWriter writer) {
+  public void print(FileWriter writer) throws IOException {
+    writer.write("date,amount,source\n");
     for (Transaction transaction: allTransaction) {
-      writer.println(csvParser(transaction));
+      writer.write(toCSV(transaction));
     }
   }
 
-  public String csvParser(Transaction transaction) {
-    StringBuilder sb = new StringBuilder();
-    double amount = transaction.getAmount();
-    sb.append(amount);
-    sb.append(",");
+    public String toCSV(Transaction transaction) {
     Date date = transaction.getDate();
-    sb.append(date);
-    sb.append(",");
-    String to = transaction.getTo();
-    sb.append(to);
-    sb.append("\n");
-    return String.valueOf(sb);
+    Double amount = transaction.getAmount();
+    String source = transaction.getSource();
+    return date+","+amount+","+source+"\n";
   }
 }
